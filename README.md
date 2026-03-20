@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+<h1 align="center"> DOT MATRIX STUDIO v1.0</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to **Dot Matrix Studio** a complete, all-in-one Live VJ and Audio Visualizer engine. 
 
-## Available Scripts
+The sleek, monochrome aesthetic and core design language of this project were heavily inspired by the iconic Nothing Phone. Whether you're rendering cinematic music videos, live-jamming to your favorite tracks, or getting lost in math-driven art, this tool gives you full control to perform live.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+##  Key Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* **Audio Reactive FX:** Upload an MP3 and watch the algorithms instantly sync to the bass, mids, and treble of your music.
+* **Live VJ Glitch Rack:** Real-time visual overrides like VHS tears, strobe flashes, ghost trails, and slow-mo.
+* **Launchpad Triggers:** Manually fire off shockwaves, sparks, and geometry right on the beat.
+* **Media Processing:** Run your webcam, videos, or images through the filter in real-time with retro effects like Bayer Dithering.
+* **Export Engine:** Record your live jams and export them directly to ultra-smooth video or high-res images.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+##  Live Performance Controls
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* **Left Hand (Glitch Rack):** `Q`, `W`, `E`, `A`, `S`, `D`, `Z`, `X`, `C`
+* **Right Hand (Triggers):** Numpad `1` - `9`
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+##  For Developers
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+If you want to run the source code yourself:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `npm run desktop`
+Runs the app to view it in your desktop.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+## COLLAB WITH
+**S VISUAL**
