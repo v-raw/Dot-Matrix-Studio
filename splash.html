@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    html, body { 
+      margin: 0; 
+      padding: 0; 
+      width: 100%; 
+      height: 100%; 
+      background-color: transparent; 
+      overflow: hidden; 
+      font-family: monospace;
+      /* Centers the card on the screen */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .splash-card { 
+      /* --- FIX: USE 100% TO PREVENT CROPPING --- */
+      width: 100%; 
+      height: 100%; 
+      /* ----------------------------------------- */
+
+      background-color: #050505; 
+      border: 1px solid #222; 
+      border-radius: 12px; 
+      display: flex; 
+      flex-direction: column; 
+      
+      /* Spreads the Top Spacer, Middle Content, and Footer apart */
+      justify-content: space-between; 
+      
+      align-items: center; 
+      box-sizing: border-box; 
+      box-shadow: 0px 10px 40px rgba(0,0,0,0.8); 
+      position: relative;
+      transition: background-color 1s ease, border-color 1s ease, box-shadow 1s ease;
+      padding: 40px 20px; 
+    }
+
+    /* --- MATRIX BACKGROUND CANVAS --- */
+    #matrixCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.25; 
+      pointer-events: none;
+      transition: opacity 1s ease;
+      border-radius: 12px;
+    }
+    
+    /* Loader Styling */
+    .loader { 
+      width: 40px; 
+      height: 40px; 
+      border: 4px solid rgba(255,255,255,0.05); 
+      border-radius: 50%; 
+      border-top-color: #ffffff; 
+      animation: spin 1s ease-in-out infinite; 
+      transition: width 1.4s cubic-bezier(0.7, 0, 0.2, 1), 
+                  height 1.4s cubic-bezier(0.7, 0, 0.2, 1),
+                  border-width 0.8s ease,
+                  border-color 0.8s ease,
+                  background-color 1.2s ease,
+                  transform 0.5s ease;
+      z-index: 10;
+      margin-top: 20px; 
+    }
+
+    @keyframes spin { 
+      to { transform: rotate(360deg); } 
+    }
+    
+    /* Center container for branding */
+    .brand-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px; 
+      z-index: 10;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      width: 90%;
+    }
+
+    h1 { 
+      margin: 0; 
+      color: #ffffff; 
+      font-size: 22px; 
+      letter-spacing: 10px; 
+      text-align: center;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    
+    .author-tag {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+    
+    .author-name-row { 
+      color: #666; 
+      font-size: 10px; 
+      letter-spacing: 3px; 
+      text-transform: uppercase; 
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* --- CLICKABLE GLOW LINK --- */
+    .author-link {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      letter-spacing: 4px;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .author-link:hover {
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 25px rgba(255, 255, 255, 0.4);
+    }
+    
+    .s-visual-logo { height: 50px; width: auto; }
+
+    /* --- PORTFOLIO BUTTON STYLE --- */
+    .portfolio-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      pointer-events: auto; 
+      text-decoration: none; 
+      transition: all 0.3s ease;
+    }
+
+    .portfolio-wrapper:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .click-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .click-text {
+      color: #aaaaaa;
+      font-size: 8px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Animated CSS Arrow */
+    .css-arrow {
+      position: relative;
+      width: 24px;
+      height: 1px;
+      background-image: linear-gradient(to right, #ffffff 50%, transparent 50%);
+      background-size: 6px 100%;
+      animation: dashFlow 0.5s linear infinite;
+    }
+
+    .css-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: -2px;
+      width: 4px;
+      height: 4px;
+      border-top: 1px solid #ffffff;
+      border-right: 1px solid #ffffff;
+      transform: rotate(45deg);
+    }
+
+    @keyframes dashFlow {
+      0% { background-position: 0 0; }
+      100% { background-position: 6px 0; }
+    }
+
+    .portfolio-url {
+      color: #999;
+      font-size: 11px; 
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .portfolio-wrapper:hover .portfolio-url {
+      color: #fff;
+    }
+
+    /* Bottom footer group */
+    .footer-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      z-index: 10;
+      transition: opacity 0.6s ease;
+    }
+
+    p.status-text { 
+      color: #444; 
+      font-size: 10px; 
+      margin: 0;
+      text-transform: uppercase; 
+      letter-spacing: 3px; 
+      text-align: center; 
+      font-weight: bold; 
+    }
+    
+    .inspired-by { 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+      opacity: 0.4; 
+    }
+    .nothing-logo { height: 12px; filter: invert(1); }
+
+    .fade-hide {
+      opacity: 0 !important;
+      transform: translateY(30px);
+      pointer-events: none;
+    }
+
+    .loader.expanding {
+      position: absolute; 
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 85vmin; 
+      height: 85vmin;
+      border-width: 1px;
+      border-color: rgba(255, 255, 255, 0.1); 
+      background-color: #050505; 
+      animation: none; 
+      box-shadow: 0 0 100px rgba(0,0,0,1);
+    }
+
+    .splash-card.transparent {
+      background-color: transparent;
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    .splash-card.transparent #matrixCanvas {
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="splash-card" id="splashCard">
+    <canvas id="matrixCanvas"></canvas>
+    
+    <!-- Top Spacer -->
+    <div style="height: 10px;"></div>
+    
+    <!-- Middle Area -->
+    <div class="brand-container" id="textContent">
+      <h1>DOT MATRIX STUDIO</h1>
+      
+      <div class="author-tag">
+        <img src="assets/S%20Visual.png" alt="S Visual Logo" class="s-visual-logo">
+        
+        <div class="author-name-row">
+          <span>by</span>
+          <a href="https://www.artstation.com/svisual" target="_blank" class="author-link">S Visual</a>
+        </div>
+
+        <!-- Portfolio Link Section -->
+        <a href="https://www.artstation.com/svisual" target="_blank" class="portfolio-wrapper">
+          <div class="click-indicator">
+            <span class="click-text">MY PORTFOLIO</span>
+            <div class="css-arrow"></div>
+          </div>
+          <span class="portfolio-url">artstation.com/svisual</span>
+        </a>
+
+        <!-- Loading Animation -->
+        <div class="loader" id="loaderRing"></div>
+      </div>
+    </div>
+
+    <!-- Bottom Area -->
+    <div class="footer-group" id="footerArea">
+      <p class="status-text" id="statusText">System Initializing...</p>
+      <div class="inspired-by">
+        <img src="assets/Nothing.png" alt="Nothing" class="nothing-logo">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function initMatrixRain() {
+      const canvas = document.getElementById('matrixCanvas');
+      const ctx = canvas.getContext('2d');
+      let width, height, columns, rows;
+      const cellSize = 18; 
+      const cellPadding = 3;
+      let drops = [];
+
+      function resize() {
+        width = canvas.width = canvas.parentElement.clientWidth;
+        height = canvas.height = canvas.parentElement.clientHeight;
+        columns = Math.floor(width / cellSize);
+        rows = Math.floor(height / cellSize);
+        drops = [];
+        for (let i = 0; i < columns; i++) {
+          drops[i] = {
+            y: Math.random() * -rows,
+            speed: 0.1 + Math.random() * 0.2,
+            length: 5 + Math.random() * 8
+          };
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+        for (let x = 0; x < columns; x++) {
+          for (let y = 0; y < rows; y++) {
+            ctx.fillRect(x * cellSize + cellPadding, y * cellSize + cellPadding, cellSize - cellPadding * 2, cellSize - cellPadding * 2);
+          }
+        }
+        for (let i = 0; i < drops.length; i++) {
+          const drop = drops[i];
+          for (let j = 0; j < drop.length; j++) {
+            const blockY = Math.floor(drop.y - j);
+            if (blockY >= 0 && blockY < rows) {
+              const alpha = 1 - (j / drop.length);
+              ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.8})`;
+              ctx.fillRect(i * cellSize + cellPadding, blockY * cellSize + cellPadding, cellSize - cellPadding * 2, cellSize - cellPadding * 2);
+            }
+          }
+          drop.y += drop.speed;
+          if (drop.y - drop.length > rows) {
+            drop.y = -drop.length;
+            drop.speed = 0.1 + Math.random() * 0.2;
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+      draw();
+    }
+
+    window.onload = () => {
+      initMatrixRain();
+      const card = document.getElementById('splashCard');
+      const brand = document.getElementById('textContent');
+      const footer = document.getElementById('footerArea');
+      const loader = document.getElementById('loaderRing');
+      const status = document.getElementById('statusText');
+
+      setTimeout(() => {
+        status.innerText = "Verifying Assets...";
+        setTimeout(() => {
+          status.innerText = "Loading Render Engine...";
+          setTimeout(() => {
+            status.innerText = "Engine Ready";
+            status.style.color = "#ffffff";
+            setTimeout(() => {
+              brand.classList.add('fade-hide');
+              footer.classList.add('fade-hide');
+              setTimeout(() => {
+                loader.classList.add('expanding');
+                card.classList.add('transparent');
+                setTimeout(() => {
+                  window.parent.postMessage('splashAnimationComplete', '*');
+                }, 1400); 
+              }, 400);
+            }, 800);
+          }, 1500);
+        }, 2000);
+      }, 1500); 
+    };
+  </script>
+</body>
+</html>
